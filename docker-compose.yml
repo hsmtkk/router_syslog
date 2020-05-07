@@ -1,0 +1,24 @@
+version: "3"
+services:
+  logstash:
+    image: logstash:7.6.2
+    depends_on:
+      - elasticsearch
+    ports:
+      - "514:514/udp"
+    volumes:
+      - "./logstash/pipeline:/usr/share/logstash/pipeline:ro"
+  elasticsearch:
+    image: elasticsearch:7.6.2
+    environment:
+      discovery.type: single-node
+    ports:
+      - "9200:9200"
+  kibana:
+    image: kibana:7.6.2
+    environment:
+      ELASTICSEARCH_HOSTS: http://127.0.0.1:9200
+    depends_on:
+      - elasticsearch
+    ports:
+      - "5601:5601"

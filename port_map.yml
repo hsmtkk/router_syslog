@@ -1,0 +1,12 @@
+apiVersion: kind.x-k8s.io/v1alpha4
+kind: Cluster
+nodes:
+- role: control-plane
+  extraPortMappings:
+  - protocol: UDP
+    containerPort: 514
+    hostPort: 514
+  - protocol: TCP
+    containerPort: 5601
+    hostPort: 5601
+
